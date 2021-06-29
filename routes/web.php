@@ -23,4 +23,10 @@ Route::get('check', 'TestController@sendData');
 
 Route::get('filter', 'TestController@filterURL');
 
+
+Route::get('register','UserController@register')->name('register');
+Route::get('login','UserController@login')->name('login');
+Route::post('login','UserController@loginCheck')->name('login.check');
 Route::resource('users','UserController');
+
+Route::resource('products','ProductController')->middleware('auth');

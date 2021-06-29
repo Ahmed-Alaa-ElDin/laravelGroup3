@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -13,7 +14,7 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    
+
     public function index()
     {
         //
@@ -24,8 +25,12 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function register()
     {
+        if (Auth::check()) {
+            Auth::logout();
+        }
+
         return view('register');
     }
 
@@ -38,10 +43,27 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'first_name' => 'required'
+            'first_name' => 'required|max:20',
+            'last_name' => 'required|max:20',
+            'password' => 'required|min:6|confirmed',
+            'email' => 'required|email',
+            'phone' => 'required|numeric',
         ]);
 
-        // dd($data);
+        $data['password'] = bcrypt($data['password']);
+
+        if ($data) {
+            $user = User::create($data);
+
+            if ($user) {
+                Auth::login($user);
+                return redirect()->route('products.index')->with('successMessage', 'You regestered successfully');
+            } else {
+                return back()->with('errorMessage', 'You didn\'t register, please try again leter.');
+            }
+        } else {
+            return back()->with('errorMessage', 'You didn\'t register, please try again leter.');
+        }
     }
 
     /**
@@ -87,5 +109,30 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function login()
+    {
+        if (Auth::check()) {
+            Auth::logout();
+        }
+
+        return view('login');
+    }
+
+    public function loginCheck(Request $request)
+    {
+        $data = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|min:6',
+        ]);
+
+        if ($data) {
+            if (Auth::attempt($data)) {
+                return redirect()->route('products.index');
+            } else {
+                return back();
+            }
+        }
     }
 }

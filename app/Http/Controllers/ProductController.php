@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -13,7 +14,11 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $products = Product::get();
+
+        return view('products.index', [
+            'products' => $products
+        ]);
     }
 
     /**
@@ -23,7 +28,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        return view('products.create');
     }
 
     /**
@@ -34,7 +39,23 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'name' => 'required|max:20|unique:products',
+            'description' => 'required',
+            'price' => 'required|numeric',
+        ]);
+
+        if ($data) {
+            $product = Product::create($data);
+
+            if ($product) {
+                return redirect()->route('products.index')->with('successMessage', 'New Product Added successfully');
+            } else {
+                return back()->with('errorMessage', 'We can\'t add new product, please try again leter.');
+            }
+        } else {
+            return back()->with('errorMessage', 'We can\'t add new product, please try again leter.');
+        }
     }
 
     /**
@@ -56,7 +77,11 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        //
+        $product = Product::find($id);
+
+        return view('products.edit',[
+            'product' => $product
+        ]);
     }
 
     /**
@@ -68,7 +93,25 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $product = Product::find($id);
+        
+        $data = $request->validate([
+            'name' => 'required|max:20|unique:products,name,'.$id,
+            'description' => 'required',
+            'price' => 'required|numeric',
+        ]);
+
+        if ($data) {
+            $product->update($data);
+
+            if ($product) {
+                return redirect()->route('products.index')->with('successMessage', 'Product updated successfully');
+            } else {
+                return back()->with('errorMessage', 'We can\'t update this product, please try again leter.');
+            }
+        } else {
+            return back()->with('errorMessage', 'We can\'t update this product, please try again leter.');
+        }
     }
 
     /**
@@ -79,6 +122,13 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $product = Product::find($id);
+
+        if ($product) {
+            $product->delete();
+            return redirect()->route('products.index')->with('successMessage', 'Product deleted successfully');
+        } else {
+            return back()->with('errorMessage', 'We can\'t delete this product, please try again leter.');
+        }
     }
 }

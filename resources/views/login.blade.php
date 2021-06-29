@@ -138,31 +138,19 @@
                 <img src="https://image.ibb.co/n7oTvU/logo_white.png" alt="" />
                 <h3>Welcome</h3>
                 <p>You are 30 seconds away from earning your own money!</p>
-                <a class="btn btn-light font-weight-bold rounded" href="{{ route('login') }}" >Login</a>
-                <br />
+                <a class="btn btn-light font-weight-bold rounded" href="{{ route('register') }}">Register</a>
             </div>
             <div class="col-md-9 register-right">
-                <form action="{{ route('users.store') }}" method="POST">
+                <form action="{{ route('login.check') }}" method="POST">
                     @csrf
                     <div class="tab-content" id="myTabContent">
                         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                            <h3 class="register-heading">Registration</h3>
+                            <h3 class="register-heading">Login</h3>
                             <div class="row register-form">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <input type="text" class="form-control" name="first_name"
-                                            placeholder="First Name *" value="{{ old('first_name') }}" />
-                                        @error('first_name')
-                                            <div class="text-center mt-1 rounded bg-danger text-white px-2">
-                                                <small class="font-weight-bold">
-                                                    {{ $message }}
-                                                </small>
-                                            </div>
-                                        @enderror
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="email" class="form-control" name="email" placeholder="Your Email *"
-                                            value="{{ old('email') }}" />
+                                        <input type="email" class="form-control" name="email"
+                                            placeholder="Your Email *" value="{{ old('email') }}" />
                                         @error('email')
                                             <div class="text-center mt-1 rounded bg-danger text-white px-2">
                                                 <small class="font-weight-bold">
@@ -171,6 +159,8 @@
                                             </div>
                                         @enderror
                                     </div>
+                                </div>
+                                <div class="col-md-6">
                                     <div class="form-group">
                                         <input type="password" class="form-control" name="password"
                                             placeholder="Password *" value="" />
@@ -184,46 +174,8 @@
 
                                     </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" name="last_name"
-                                            placeholder="Last Name *" value="{{ old('last_name') }}" />
-                                        @error('last_name')
-                                            <div class="text-center mt-1 rounded bg-danger text-white px-2">
-                                                <small class="font-weight-bold">
-                                                    {{ $message }}
-                                                </small>
-                                            </div>
-                                        @enderror
-
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" name="phone" placeholder="Your Phone *"
-                                            value="{{ old('phone') }}" />
-                                        @error('phone')
-                                            <div class="text-center mt-1 rounded bg-danger text-white px-2">
-                                                <small class="font-weight-bold">
-                                                    {{ $message }}
-                                                </small>
-                                            </div>
-                                        @enderror
-
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="password" class="form-control" name="password_confirmation"
-                                            placeholder="Confirm Password *" value="" />
-                                        @error('password_confirmation')
-                                            <div class="text-center mt-1 rounded bg-danger text-white px-2">
-                                                <small class="font-weight-bold">
-                                                    {{ $message }}
-                                                </small>
-                                            </div>
-                                        @enderror
-
-                                    </div>
-                                </div>
                                 <div class="m-auto">
-                                    <input type="submit" class="btnRegister w-100 px-3 py-1" value="Register" />
+                                    <input type="submit" class="btnRegister w-100 px-3 py-1" value="Login" />
                                 </div>
                             </div>
                         </div>
