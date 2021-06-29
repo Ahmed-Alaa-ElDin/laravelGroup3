@@ -150,11 +150,11 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <input type="text" class="form-control" name="first_name"
-                                            placeholder="First Name *" value="" />
+                                            placeholder="First Name *" value="{{ old('first_name') }}" />
                                     </div>
                                     <div class="form-group">
                                         <input type="email" class="form-control" name="mail" placeholder="Your Email *"
-                                            value="" />
+                                            value="{{ old('mail') }}" />
                                     </div>
                                     <div class="form-group">
                                         <input type="password" class="form-control" name="password"
@@ -164,11 +164,10 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <input type="text" class="form-control" name="last_name"
-                                            placeholder="Last Name *" value="" />
+                                            placeholder="Last Name *" value="{{ old('last_name') }}" />
                                     </div>
                                     <div class="form-group">
-                                        <input type="text" minlength="10" maxlength="10" name="txtEmpPhone"
-                                            class="form-control" name="phone" placeholder="Your Phone *" value="" />
+                                        <input type="text" class="form-control" name="phone" placeholder="Your Phone *" value="{{ old('phone') }}" />
                                     </div>
                                     <div class="form-group">
                                         <input type="password" class="form-control" name="password_confirmation"

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+
 
 class UserController extends Controller
 {
@@ -11,6 +13,7 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    
     public function index()
     {
         //
@@ -34,9 +37,11 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        $data = $request->validate([
+            'first_name' => 'required'
+        ]);
 
-        
-        dd($request);
+        // dd($data);
     }
 
     /**
