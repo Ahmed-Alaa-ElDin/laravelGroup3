@@ -27,6 +27,7 @@ Route::get('filter', 'TestController@filterURL');
 Route::get('register','UserController@register')->name('register');
 Route::get('login','UserController@login')->name('login');
 Route::post('login','UserController@loginCheck')->name('login.check');
+Route::get('logout','UserController@logout')->name('logout');
 Route::resource('users','UserController');
 
 Route::resource('products','ProductController')->middleware('auth');
