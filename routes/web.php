@@ -30,4 +30,4 @@ Route::post('login','UserController@loginCheck')->name('login.check');
 Route::get('logout','UserController@logout')->name('logout');
 Route::resource('users','UserController');
 
-Route::resource('products','ProductController')->middleware('auth');
+Route::resource('products','ProductController')->middleware('admin');
